@@ -1,7 +1,7 @@
 # Decentralized MMORPG
 
 
-[![in Progress](https://badge.waffle.io/waffleio/waffle.io.svg?label=waffle%3Ain%20progress&title=In%20Progress)](http://waffle.io/waffleio/waffle.io)
+[![in Progress](https://badge.waffle.io/aofg/decentralized-mmo.svg?label=waffle%3Ain%20progress&title=In%20Progress)](http://waffle.io/aofg/decentralized-mmo)
 
 ### Abstract
 
