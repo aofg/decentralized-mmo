@@ -1,5 +1,8 @@
 # Decentralized MMORPG
 
+
+[![in Progress](https://badge.waffle.io/waffleio/waffle.io.svg?label=waffle%3Ain%20progress&title=In%20Progress)](http://waffle.io/waffleio/waffle.io)
+
 ### Abstract
 
 This paper as well as appendix repository discusses the main architectural considerations for a Massively Multiplayer Online Role Playing Game (MMORPG) without aspect of centralization. The traditional way to implement MMORPG is the client/server model with full authority on central server. We will test and prove alternative approach to separate authority around community (in other words – players).
