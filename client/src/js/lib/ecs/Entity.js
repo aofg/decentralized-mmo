@@ -5,7 +5,7 @@ export default class Entity {
     this._pool = pool
     this._getters = []
     this.owners = {}
-    this.ownersCount = 0;
+    this.ownersCount = 0
     this._components = Array(components.length)
 
     //! Shortcuts
