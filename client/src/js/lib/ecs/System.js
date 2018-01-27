@@ -5,7 +5,9 @@ export default class System {
     this._deinitializeSystems = []
     this._cleanupSystems = []
   }
-
+  add (system) {
+    return this.addSystem(system)
+  }
   addSystem (system) {
     if (typeof system.execute === 'function') {
       this._executionSystems.push(system)
@@ -24,6 +26,14 @@ export default class System {
     }
 
     return this
+  }
+
+  initialize () {
+    this._initializeSystems.forEach(system => system.initialize())
+  }
+
+  deinitialize () {
+    this._deinitializeSystems.forEach(system => system.deinitialize())
   }
 
   execute () {

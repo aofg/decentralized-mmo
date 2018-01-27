@@ -1,6 +1,6 @@
-import { Pool } from '@/js/lib/ecs'
+import { System, Pool } from '@/js/lib/ecs'
 import { Map, Center } from './components'
-export { LoadMapSystem, SlideMapToCenterSystem } from './systems'
+import { LoadMapSystem, SlideMapToCenterSystem } from './systems'
 
 export class WorldPool extends Pool {
   constructor () {

@@ -76,6 +76,11 @@ export default (env = defaultEnv) => ({
       }
     ]
   },
+  target: 'web',
+
+  node: {
+    fs: 'empty'
+  },
   plugins: [
     ...(env.dev ? [] : [new CleanWebpackPlugin(['dist'])]),
     new HtmlWebpackPlugin({

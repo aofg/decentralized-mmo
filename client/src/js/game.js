@@ -1,3 +1,4 @@
+import { System } from '@/js/lib/ecs'
 import { Context } from '@/js/lib/ioc'
 import { kernelFactory } from '@/js/lib/ecs-ioc'
 import { WorldKernel } from './kernels/world'
@@ -16,16 +17,21 @@ export default class Game {
   }
 
   create () {
-    this.context.bind('worldKernel').factory(kernelFactory(WorldKernel, this.context))
-    this.context.bind('entitiesKernel').factory(kernelFactory(EntitiesKernel, this.context))
-    this.context.bind('mobilesKernel').factory(kernelFactory(MobilesKernel, this.context))
-    this.context.bind('playerKernel').factory(kernelFactory(PlayerKernel, this.context))
+    this.context.bind('WorldKernel').factory(kernelFactory(WorldKernel, this.context))
+    this.context.bind('EntitiesKernel').factory(kernelFactory(EntitiesKernel, this.context))
+    this.context.bind('MobilesKernel').factory(kernelFactory(MobilesKernel, this.context))
+    this.context.bind('PlayerKernel').factory(kernelFactory(PlayerKernel, this.context))
 
-    const worldKernel = this.context.resolve('worldKernel')
-    console.log(worldKernel)
+    const worldKernel = this.context.resolve('WorldKernel')
+    const worldScenario = this.context.resolve('WorldKernelScenario')
+    console.log(System)
+    this.scenario = new System()
+      .add(worldScenario)
+
+    this.scenario.initialize()
   }
 
   update (dt) {
-
+    this.scenario.execute()
   }
 }

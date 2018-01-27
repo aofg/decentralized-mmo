@@ -1,14 +1,17 @@
 import { System } from '@/js/lib/ecs'
-import WorldMap from '@/js/lib/map/worldMap'
 
 export class LoadMapSystem extends System {
-  inject ({ pool }) {
-    this.pool = pool
+  constructor () {
+    super()
+    this.$dependencies = [ 'WorldPool' ]
   }
 
   initialize () {
-    const map = new WorldMap()
-    map.prepare()
-    this.pool.createEntity().addMap(map)
+  }
+}
+
+export class SlideMapToCenterSystem extends System {
+  initialize () {
+    console.log('would you like center your camera?')
   }
 }
