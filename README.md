@@ -18,15 +18,68 @@ Almost any recent multiplayer games based on model with __distributed__ server a
 
 Core challenge is providing mathematical proof of valid state for anyone in game without impact on player experience. 
 
-##  Massively Multiplayer Online Games
+## Simulation of the Worlds
 
 MMORPG is very similar to simulation of the life inside sandbox with choicen rules. In that point of view we could setup base idea of simulation:
 
-Let snapshot of __the State of the moment__ is ***S*** <-- latex is coming
+Let snapshot of __the State of the moment__ is $$S$$.
 
-And ***S*** is a set of all entities inside a simulation. Let set of entities will be an ***E***. 
+And $$S$$ a snapshot of the states of all _entities_ inside a simulation. So, in a case of MMORPG our mission is a calculation of the next $$S'$$ (the State of next moment) based on current $$S$$. Simple is that.
 
-## Proof of Concent (PoC) Implementation (Prototype)
+But what is $$S$$ or most correct what is set of all entities is? Let call entity as $$e$$ and set of entities as $$E_S$$. Easiest way is imagine entity as an abstract box\container. If $$S$$ could be described with any amount of $$e$$ (from $$0$$ to $$\infty$$), but each **$$e$$ is limited and pre-known set of components**. 
+
+Component is a strict data structure without any logic and solve only one task — storing a data. Lets call components as $$c$$ add $$C$$ as a set of the components. 
+
+So, if $$C_e$$ is a set of the corresponding $$e$$, then $$S$$ will be:
+
+$$
+\begin{equation}
+\begin{aligned}
+S &= \sum^{||E_S||}_{i=1} e_i, & e \in E_S \\
+e &= \sum^{||C_e||}_{i=1} c_i, & c \in C_e
+\end{aligned}
+\end{equation}
+$$
+
+Now then we know what is $$S$$, let move to calculation of the $$S'$$. Let's assume that our simulation is about next features:
+
+* **Shape** is a component of the shape and will be $$c_{shape}$$.
+* **Color** is a component of the colorand will be $$c_{color}$$. Could be one of next: 
+
+$$
+\begin{equation}
+\begin{aligned}
+e &= [c_{shape}, c_{color}], \\ 
+c_{shape} &\in [\mathbb{CUBE},\ \mathbb{SPHERE}] \ \wedge \\
+c_{color} &\in [\mathbb{RED},\ \mathbb{YELLOW},\ \mathbb{GREEN}] \\
+f(v, x) =&\ \{i \ | \ i \in \mathbb{N},  i > |v|, v_i = x \}
+\end{aligned}
+\end{equation}
+$$
+
+Rules of our simulation is a pretty simple. If shape component of the entity is a sphere, then color component of the entity will be _next_ color at the next moment of the Time.
+
+$$
+\begin{equation}
+\begin{aligned}
+f(e) &= e' \\
+\\
+f_{simulation}(e) &= \begin{cases}
+[e_{shape}, f_{nextColor}(e)], & \text{if } e_{shape} = \mathbb{SPHERE} \\
+    [e_{shape}, e_{color}], & \text{overwise }
+\end{cases} \\
+\\
+f_{nextColor}(e) &= \begin{cases}
+    \mathbb{RED}, & \text{if } e_{color} = \mathbb{GREEN} \\
+    \mathbb{YELLOW}, &\text{if } e_{color} = \mathbb{RED} \\
+    \mathbb{GREEN}, &\text{if } e_{color} = \mathbb{YELLOW}
+  \end{cases}
+\end{aligned}
+\end{equation}
+$$
+
+
+I I# Proof of Concent (PoC) Implementation (Prototype)
 
 With a reason of rapidly iteration and early achievement of results (or failure), we chose JavaScript as primary language for the MVC. 
 
