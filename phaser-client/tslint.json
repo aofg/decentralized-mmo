@@ -1,0 +1,14 @@
+{
+  "extends": "tslint-config-standard",
+  "rules": {
+    "space-before-function-paren": [
+      true,
+      "never"
+    ]
+  },
+  "linterOptions": {
+      "exclude": [
+          "src/assets.ts"
+      ]
+  }
+}
