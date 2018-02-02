@@ -35,9 +35,13 @@ sysinfo.txt
 *.unitypackage
 
 BuiltinShaders
+BuiltinShaders.meta
 
 .idea
 
 *.DotSettings
 
 /Third
+Third.meta
+BitmapFontImporter
+BitmapFontImporter.meta
