@@ -1,19 +1,24 @@
-import { IoC } from './IoC'
+import { IoC, BindingPipe, ClassRef, DependencyRequest } from './IoC'
+
 export class Context {
-    ioc: IoC
-    constructor() {
-        this.ioc = new IoC()
-    }
+  ioc: IoC
+  constructor() {
+    this.ioc = new IoC()
+  }
 
-    bind(identity) {
-        return this.ioc.bind(identity)
-    }
+  bind(identity): BindingPipe {
+    return this.ioc.bind(identity)
+  }
 
-    create(Class) {
-        return this.ioc.create(Class)
-    }
+  create<T>(ref: ClassRef): T {
+    return this.ioc.create(ref)
+  }
 
-    resolve(identity) {
-        return this.ioc.resolve(identity)
-    }
+  resolve<T>(request: DependencyRequest): T {
+    return this.ioc.resolve<T>(request)
+  }
+
+  resolveAny(request: DependencyRequest): any {
+    return this.ioc.resolveAny(request)
+  }
 }

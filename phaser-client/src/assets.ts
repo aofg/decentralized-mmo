@@ -1,14 +1,56 @@
 /* AUTO GENERATED FILE. DO NOT MODIFY. YOU WILL LOSE YOUR CHANGES ON BUILD. */
 
+/* tslint:disable */
+
 export namespace Images {
     export class ImagesBackgroundTemplate {
         static getName(): string { return 'background_template'; }
 
         static getPNG(): string { return require('assets/images/background_template.png'); }
     }
+    export class ImagesCastleTiles {
+        static getName(): string { return 'castle-tiles'; }
+
+        static getPNG(): string { return require('assets/images/castle-tiles.png'); }
+    }
+    export class ImagesInteriorTiles {
+        static getName(): string { return 'interior-tiles'; }
+
+        static getPNG(): string { return require('assets/images/interior-tiles.png'); }
+    }
+    export class ImagesPlantTiles {
+        static getName(): string { return 'plant-tiles'; }
+
+        static getPNG(): string { return require('assets/images/plant-tiles.png'); }
+    }
+    export class ImagesTerrainTiles {
+        static getName(): string { return 'terrain-tiles'; }
+
+        static getPNG(): string { return require('assets/images/terrain-tiles.png'); }
+    }
 }
 
 export namespace Spritesheets {
+    export class SpritesheetsCastle3232152 {
+        static getName(): string { return 'castle.[32,32,152,0,0]'; }
+
+        static getPNG(): string { return require('assets/spritesheets/castle.[32,32,152,0,0].png'); }
+        static getFrameWidth(): number { return 32; }
+        static getFrameHeight(): number { return 32; }
+        static getFrameMax(): number { return 152; }
+        static getMargin(): number { return 0; }
+        static getSpacing(): number { return 0; }
+    }
+    export class SpritesheetsInterior3232256 {
+        static getName(): string { return 'interior.[32,32,256,0,0]'; }
+
+        static getPNG(): string { return require('assets/spritesheets/interior.[32,32,256,0,0].png'); }
+        static getFrameWidth(): number { return 32; }
+        static getFrameHeight(): number { return 32; }
+        static getFrameMax(): number { return 256; }
+        static getMargin(): number { return 0; }
+        static getSpacing(): number { return 0; }
+    }
     export class SpritesheetsMetalslugMummy374518 {
         static getName(): string { return 'metalslug_mummy.[37,45,18,0,0]'; }
 
@@ -16,6 +58,26 @@ export namespace Spritesheets {
         static getFrameWidth(): number { return 37; }
         static getFrameHeight(): number { return 45; }
         static getFrameMax(): number { return 18; }
+        static getMargin(): number { return 0; }
+        static getSpacing(): number { return 0; }
+    }
+    export class SpritesheetsPlant3232169 {
+        static getName(): string { return 'plant.[32,32,169,0,0]'; }
+
+        static getPNG(): string { return require('assets/spritesheets/plant.[32,32,169,0,0].png'); }
+        static getFrameWidth(): number { return 32; }
+        static getFrameHeight(): number { return 32; }
+        static getFrameMax(): number { return 169; }
+        static getMargin(): number { return 0; }
+        static getSpacing(): number { return 0; }
+    }
+    export class SpritesheetsTerrain3232483 {
+        static getName(): string { return 'terrain.[32,32,483,0,0]'; }
+
+        static getPNG(): string { return require('assets/spritesheets/terrain.[32,32,483,0,0].png'); }
+        static getFrameWidth(): number { return 32; }
+        static getFrameHeight(): number { return 32; }
+        static getFrameMax(): number { return 483; }
         static getMargin(): number { return 0; }
         static getSpacing(): number { return 0; }
     }
@@ -164,5 +226,9 @@ export namespace Shaders {
     }
 }
 export namespace Misc {
-    class IExistSoTypeScriptWillNotComplainAboutAnEmptyNamespace {}
+    export class TilemapWorld {
+        static getName(): string { return 'world'; }
+
+        static getFile(): string { return require('assets/tilemap/world.tmx'); }
+    }
 }

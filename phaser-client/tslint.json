@@ -1,9 +1,14 @@
 {
-    "extends": "./node_modules/phaser-ce/typescript/tslint.json",
-    "rules": {
-        "quotemark": [
-            true,
-            "single"
-        ]
-    }
+  "extends": "tslint-config-standard",
+  "rules": {
+    "space-before-function-paren": [
+      true,
+      "never"
+    ]
+  },
+  "linterOptions": {
+      "exclude": [
+          "src/assets.ts"
+      ]
+  }
 }

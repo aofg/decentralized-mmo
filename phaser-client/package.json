@@ -4,6 +4,7 @@
   "version": "1.8.6",
   "main": "electron-main.js",
   "scripts": {
+    "version": "tsc -v",
     "webpack:dev": "webpack --config webpack.dev.config.js --progress --colors",
     "webpack:dist": "webpack --config webpack.dist.config.js --progress --colors",
     "build:dev": "echo-cli 'Building DEV ...' && npm run webpack:dev && echo-cli 'Build Complete ✔'",
@@ -41,9 +42,12 @@
     "expose-loader": "0.7.4",
     "file-loader": "1.1.6",
     "html-webpack-plugin": "2.30.1",
+    "inversify": "^4.10.0",
     "npm-check": "5.5.2",
     "phaser-ce": "2.10.0",
+    "phaser-tiled": "^2.0.4",
     "pngjs-image": "0.11.7",
+    "reflect-metadata": "^0.1.12",
     "shelljs": "0.8.1",
     "ts-loader": "3.3.1",
     "tslint": "5.9.1",
@@ -55,5 +59,8 @@
     "webpack-dev-server": "2.11.1",
     "webpack-synchronizable-shell-plugin": "0.0.6",
     "xml2js": "0.4.19"
+  },
+  "devDependencies": {
+    "tslint-config-standard": "^7.0.0"
   }
 }

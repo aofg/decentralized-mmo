@@ -142,6 +142,7 @@ var assetsClassFile = 'src/assets.ts';
 shell.rm('-f', assetsClassFile);
 
 shell.ShellString('/* AUTO GENERATED FILE. DO NOT MODIFY. YOU WILL LOSE YOUR CHANGES ON BUILD. */\n\n').to(assetsClassFile);
+shell.ShellString('/* tslint:disable */\n\n').toEnd(assetsClassFile);
 
 shell.ShellString('export namespace Images {').toEnd(assetsClassFile);
 if (!Object.keys(loaderTypes.image).length) {
