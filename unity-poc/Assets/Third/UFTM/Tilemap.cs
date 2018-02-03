@@ -65,12 +65,18 @@ namespace UFTM
 
         private void LoadWorldAt(int row, int col)
         {
+            var offsetX = worldX * Renderer.COLS;
+            var offsetY = worldY * Renderer.ROWS;
+            var halfChunkX = Renderer.COLS / 2 + col * Renderer.COLS;
+            var halfChunkY = Renderer.ROWS / 2 + row * Renderer.ROWS;
+            
             var rendererIndex = (row + 1) * 3 + (col + 1);
             for (int y = 0; y < Renderer.ROWS; y++)
             {
                 for (int x = 0; x < Renderer.COLS; x++)
                 {
-                    var tiles = World.GetTiles(worldX * Renderer.COLS + x - Renderer.COLS / 2 + col * Renderer.COLS, worldY * Renderer.ROWS + y - Renderer.ROWS / 2 + row * Renderer.ROWS);
+                    var tiles = World.GetTiles(offsetX + x - halfChunkX, offsetY + y - halfChunkY);
+                    
                     renderers[rendererIndex].RemoveTiles(x, y);
                         
                     for (var tileIndex = 0; tileIndex < tiles.Length; tileIndex++)
@@ -105,6 +111,11 @@ namespace UFTM
             systemgo.transform.SetParent(transform, false);
 
             return renderer;
+        }
+
+        public void RefreshAt(int x, int y)
+        {
+            LoadWorldAt((x - worldX) / Renderer.COLS, (y - worldY) / Renderer.ROWS);
         }
     }
 }

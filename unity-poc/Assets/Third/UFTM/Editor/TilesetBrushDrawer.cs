@@ -106,7 +106,7 @@ namespace Third.UFTM.Editor
                 return EditorGUIUtility.singleLineHeight;
             } else
             {
-                return  EditorGUIUtility.singleLineHeight + 3 + EditorGUIUtility.singleLineHeight + 3 + 38 * 2 + EditorGUIUtility.singleLineHeight + 3;
+                return (EditorGUIUtility.singleLineHeight + 3) * 5 + 60 + 38 * 2;
             }
         }
 
@@ -123,14 +123,34 @@ namespace Third.UFTM.Editor
             }
             else
             {
-                var fold = new Rect(position);
-                fold.height = EditorGUIUtility.singleLineHeight;
-                property.isExpanded = EditorGUI.Foldout(fold, property.isExpanded, label, EditorStyles.boldFont);
-                
+                var line = new Rect(position);
+                line.height = EditorGUIUtility.singleLineHeight;
+                property.isExpanded = EditorGUI.Foldout(line, property.isExpanded, label, EditorStyles.boldFont);
+                position.y += EditorGUIUtility.singleLineHeight + 3;
+                position.height -= EditorGUIUtility.singleLineHeight + 3;
+
+                line = new Rect(position);
+                line.height = EditorGUIUtility.singleLineHeight;
+                EditorGUI.PropertyField(line, property.FindPropertyRelative("Name"));
                 position.y += EditorGUIUtility.singleLineHeight + 3;
                 position.height -= EditorGUIUtility.singleLineHeight + 3;
                 
-                var line = new Rect(position);
+                line = new Rect(position);
+                line.height = EditorGUIUtility.singleLineHeight;
+                EditorGUI.PropertyField(line, property.FindPropertyRelative("Icon"));
+                position.y += EditorGUIUtility.singleLineHeight + 3;
+                position.height -= EditorGUIUtility.singleLineHeight + 3;
+                
+                line = new Rect(position);
+                line.height = 57;
+                property.FindPropertyRelative("Description").stringValue = EditorGUI.TextArea(line, property.FindPropertyRelative("Description").stringValue);
+                position.y += 60;
+                position.height -= 60;
+
+                position.x += EditorGUI.indentLevel * 13;
+                position.width -= EditorGUI.indentLevel * 13;
+                
+                line = new Rect(position);
                 line.height = EditorGUIUtility.singleLineHeight;
                 line.width -= 100;
                 

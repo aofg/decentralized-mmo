@@ -44,86 +44,9 @@ Shader "UI/Overlay"
         ZTest [unity_GUIZTestMode]
         ColorMask [_ColorMask]
 
-//        Pass
-//        {
-//            Blend One One
-//            Name "Default"
-//        CGPROGRAM
-//            #pragma vertex vert
-//            #pragma fragment frag
-//            #pragma target 2.0
-//
-//            #include "UnityCG.cginc"
-//            #include "UnityUI.cginc"
-//
-//            #pragma multi_compile __ UNITY_UI_CLIP_RECT
-//            #pragma multi_compile __ UNITY_UI_ALPHACLIP
-//
-//            struct appdata_t
-//            {
-//                float4 vertex   : POSITION;
-//                float4 color    : COLOR;
-//                float2 texcoord : TEXCOORD0;
-//                UNITY_VERTEX_INPUT_INSTANCE_ID
-//            };
-//
-//            struct v2f
-//            {
-//                float4 vertex   : SV_POSITION;
-//                fixed4 color    : COLOR;
-//                float2 texcoord  : TEXCOORD0;
-//                float4 worldPosition : TEXCOORD1;
-//                UNITY_VERTEX_OUTPUT_STEREO
-//            };
-//
-//            fixed4 _Color;
-//            fixed4 _TextureSampleAdd;
-//            float4 _ClipRect;
-//
-//            v2f vert(appdata_t v)
-//            {
-//                v2f OUT;
-//                UNITY_SETUP_INSTANCE_ID(v);
-//                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
-//                OUT.worldPosition = v.vertex;
-//                OUT.vertex = UnityObjectToClipPos(OUT.worldPosition);
-//
-//                OUT.texcoord = v.texcoord;
-//
-//                OUT.color = v.color * _Color;
-//                return OUT;
-//            }
-//
-//            sampler2D _MainTex;
-//
-//            fixed4 frag(v2f IN) : SV_Target
-//            {
-//                half4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;
-//                half blend = color.a;
-//                
-//                color = max(half4(0.5,0.5,0.5,1), color);
-//                color -= 0.5;
-//                color *= 2;                
-//                color *= blend;
-//                
-//                color.a = 1;
-//
-//                #ifdef UNITY_UI_CLIP_RECT
-//                color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);
-//                #endif
-//
-//                #ifdef UNITY_UI_ALPHACLIP
-//                clip (color.a - 0.001);
-//                #endif
-//
-//                return color;
-//            }
-//        ENDCG
-//        }
-        
         Pass
         {
-            Blend DstColor SrcColor 
+            Blend OneMinusDstColor One
             Name "Default"
         CGPROGRAM
             #pragma vertex vert
@@ -177,13 +100,92 @@ Shader "UI/Overlay"
             {
                 half4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;
                 half blend = color.a;
-//                
-//                color = min(0.5, color);
-//                color *= 2;
                 
-//                color = 1 - color;
-//                color *= blend;
-//                color = 1 - color;
+                color = max(half4(0.5,0.5,0.5,1), color);
+                color -= 0.5;
+                color *= 2;                
+                color *= blend;
+                
+                color.a = 1;
+
+                #ifdef UNITY_UI_CLIP_RECT
+                color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);
+                #endif
+
+                #ifdef UNITY_UI_ALPHACLIP
+                clip (color.a - 0.001);
+                #endif
+
+                return color;
+            }
+        ENDCG
+        }
+        
+        Pass
+        {
+            Blend DstColor Zero 
+            Name "Default"
+        CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma target 2.0
+
+            #include "UnityCG.cginc"
+            #include "UnityUI.cginc"
+
+            #pragma multi_compile __ UNITY_UI_CLIP_RECT
+            #pragma multi_compile __ UNITY_UI_ALPHACLIP
+
+            struct appdata_t
+            {
+                float4 vertex   : POSITION;
+                float4 color    : COLOR;
+                float2 texcoord : TEXCOORD0;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
+            };
+
+            struct v2f
+            {
+                float4 vertex   : SV_POSITION;
+                fixed4 color    : COLOR;
+                float2 texcoord  : TEXCOORD0;
+                float4 worldPosition : TEXCOORD1;
+                UNITY_VERTEX_OUTPUT_STEREO
+            };
+
+            fixed4 _Color;
+            fixed4 _TextureSampleAdd;
+            float4 _ClipRect;
+
+            v2f vert(appdata_t v)
+            {
+                v2f OUT;
+                UNITY_SETUP_INSTANCE_ID(v);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
+                OUT.worldPosition = v.vertex;
+                OUT.vertex = UnityObjectToClipPos(OUT.worldPosition);
+
+                OUT.texcoord = v.texcoord;
+
+                OUT.color = v.color * _Color;
+                return OUT;
+            }
+
+            sampler2D _MainTex;
+
+            fixed4 frag(v2f IN) : SV_Target
+            {
+                half4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;
+                half blend = color.a;
+                
+                color = min(0.5, color);
+                color *= 2;
+                
+                color = 1 - color;
+                color *= blend;
+                color = 1 - color;
+                
+//                color = lerp(0.5, color, blend);
                 
                 color.a = 1;
                 

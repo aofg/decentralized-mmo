@@ -13,3 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BaseTexture: {fileID: 2800000, guid: de76719d9d5663d489b0951988e80b20, type: 3}
   TileSize: 32
+  Brushes: []

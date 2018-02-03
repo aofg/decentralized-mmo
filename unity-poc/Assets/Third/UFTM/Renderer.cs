@@ -36,6 +36,9 @@ namespace UFTM
             tiles = new Tile[MAX_PARTICLES];
             ps = gameObject.AddComponent<ParticleSystem>();
             pr = gameObject.GetComponent<ParticleSystemRenderer>();
+
+            var main = ps.main;
+            main.startSize = 0.96f;
         }
 
         public void RemoveTiles(int x, int y)
