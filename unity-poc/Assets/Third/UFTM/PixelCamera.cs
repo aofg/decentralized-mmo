@@ -4,12 +4,126 @@ using System.Linq;
 using System.Security.Cryptography;
 using UFTM.Datatypes;
 using UFTM.Interfaces;
+using Uniful;
 using UnityEngine;
 
 namespace UFTM
 {
     public class PixelCamera : MonoBehaviour, IWorldData
     {
+        enum MaskType
+        {
+            None             = 0,                 // 0
+            North            = 1,                // 1
+            East             = 2,                 // 2
+            South            = 4,                // 4
+            West             = 8,                 // 8
+            NorthEast        = 16,
+            SouthEast        = 32,
+            SouthWest        = 64,
+            NorthWest        = 128
+        }
+
+        private static int[][] patterns = new[]
+        {
+            new[] // tile 0
+            {
+                0, 0, 0,
+                0, 0, 0,
+                0, 0, 0,
+            },
+            new[] // tile 1
+            {
+                0, 1, 1,
+                0, 0, 1,
+                0, 0, 0,
+            },
+            new[] // tile 2
+            {
+                0, 0, 0,
+                0, 0, 1,
+                0, 1, 1,
+            },
+            new[] // tile 3
+            {
+                0, 1, 1,
+                0, 0, 1,
+                0, 1, 1,
+            },
+            new[] // tile 4
+            {
+                0, 0, 0,
+                1, 0, 0,
+                1, 1, 0,
+            },
+            new[] // tile 5
+            {
+                0, 1, 1,
+                1, 0, 1,
+                1, 1, 0,
+            },
+            new[] // tile 6
+            {
+                0, 0, 0,
+                1, 0, 1,
+                1, 1, 1,
+            },
+            new[] // tile 7
+            {
+                0, 1, 1,
+                1, 0, 1,
+                1, 1, 1,
+            },
+            new[] // tile 8
+            {
+                1, 1, 0,
+                1, 0, 0,
+                0, 0, 0,
+            },
+            new[] // tile 9
+            {
+                1, 1, 1,
+                1, 0, 1,
+                0, 0, 0,
+            },
+            new[] // tile 10
+            {
+                1, 1, 0,
+                1, 0, 1,
+                0, 1, 1,
+            },
+            new[] // tile 11
+            {
+                1, 1, 1,
+                1, 0, 1,
+                0, 1, 1,
+            },
+            new[] // tile 12
+            {
+                1, 1, 0,
+                1, 0, 0,
+                1, 1, 0,
+            },
+            new[] // tile 13
+            {
+                1, 1, 1,
+                1, 0, 1,
+                1, 1, 0,
+            },
+            new[] // tile 14
+            {
+                1, 1, 0,
+                1, 0, 1,
+                1, 1, 1,
+            },
+            new[] // tile 15
+            {
+                1, 1, 1,
+                1, 0, 1,
+                1, 1, 1,
+            }
+        };
+        
         struct Point2d
         {
             public int X;
@@ -165,11 +279,77 @@ namespace UFTM
             var southEast = GetTiles(x + 1, y - 1);
             var southWest = GetTiles(x - 1, y - 1);
             var northWest = GetTiles(x - 1, y + 1);
+            
+            var north = GetTiles(x + 0, y + 1);
+            var south = GetTiles(x + 0, y - 1);
+            var west =  GetTiles(x - 1, y + 0);
+            var east =  GetTiles(x + 1, y + 0);
 
-            var mask = IsSame(ids, northEast, level) << 0 | IsSame(ids, southEast, level) << 1 |
-                       IsSame(ids, southWest, level) << 2 | IsSame(ids, northWest, level) << 3;
+            var NE = IsSame(ids, northEast, level);
+            var NN = IsSame(ids, north, level);
+            var NW = IsSame(ids, northWest, level);
+            var EE = IsSame(ids, east, level);
+            var CC = 0; // just for clear
+            var WW = IsSame(ids, west, level);
+            var SE = IsSame(ids, southEast, level);
+            var SS = IsSame(ids, south, level);
+            var SW = IsSame(ids, southWest, level);
 
-            SetTile(x, y, ids[mask], level);
+
+            var patternMask = new int[]
+            {
+                NW, NN, NE,
+                WW, CC, EE,
+                SW, SS, SE
+            };
+            
+            var tile = GetTile(patternMask);
+
+            if (tile >= 0)
+            {
+                SetTile(x, y, ids[tile], level);
+            }
+            else
+            {
+                Debug.LogError("Unxpected tile at " + x + ", " + y);
+            }
+        }
+
+        private int GetTile(int[] patternMatch)
+        {
+            var matchedTile = -1;
+            var matchedWeight = 0;
+            for (var tileIndex = 0; tileIndex < patterns.Length; tileIndex++)
+            {
+                var tmpWeight = 0;
+                var matched = true;
+                var pattern = patterns[tileIndex];
+                
+                for (var patternElementIndex = 0; patternElementIndex < pattern.Length; patternElementIndex++)
+                {
+                    if (pattern[patternElementIndex] == 0)
+                    {
+                        continue;
+                    }
+                    
+                    if (pattern[patternElementIndex] == patternMatch[patternElementIndex])
+                    {
+                        tmpWeight++;
+                        continue;
+                    }
+                    
+                    matched = false;
+                    break;
+                }
+
+                if (matched && matchedWeight < tmpWeight)
+                {
+                    matchedTile = tileIndex;
+                    matchedWeight = tmpWeight;
+                }
+            }
+
+            return matchedTile;
         }
 
         private int IsSame(ushort[] brushTileIds, ushort[] another, int level)

@@ -38,6 +38,7 @@ namespace UFTM
         {
             if (worldX != x || worldY != y)
             {
+                Debug.LogFormat("World {0}, {1}", x, y);
                 worldX = x;
                 worldY = y;
                 OrganizeSystems();
@@ -115,7 +116,7 @@ namespace UFTM
 
         public void RefreshAt(int x, int y)
         {
-            LoadWorldAt((x - worldX) / Renderer.COLS, (y - worldY) / Renderer.ROWS);
+            LoadWorldAt((x + worldX * Renderer.COLS) / Renderer.COLS, (y + worldY * Renderer.ROWS) / Renderer.ROWS);
         }
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Profiling;
-
 namespace UFTM
 {
     public class Renderer : MonoBehaviour
@@ -37,8 +36,8 @@ namespace UFTM
             ps = gameObject.AddComponent<ParticleSystem>();
             pr = gameObject.GetComponent<ParticleSystemRenderer>();
 
-            var main = ps.main;
-            main.startSize = 0.96f;
+//            var main = ps.main;
+//            main.startSize = 0.96f;
         }
 
         public void RemoveTiles(int x, int y)

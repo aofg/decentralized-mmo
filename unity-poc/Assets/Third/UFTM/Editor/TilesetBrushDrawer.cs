@@ -113,7 +113,7 @@ namespace Third.UFTM.Editor
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
-            if (string.IsNullOrEmpty(EditorPrefs.GetString("UFTM_Atlas")))
+            if (string.IsNullOrEmpty(EditorPrefs.GetString("UFTM_Atlas")) || SelectedAtlas == null)
             {
                 SelectAtlasUI(position);
             }

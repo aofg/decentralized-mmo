@@ -6061,6 +6061,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbfebe5a341e477fbca7eeef63cf0ab6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Map: {fileID: 1396799209}
   Mocking: {fileID: 1814279499}
   Atlas: {fileID: 11400000, guid: f73336ff1dac4fd4387ed505b181f332, type: 2}
 --- !u!1 &1883900960
